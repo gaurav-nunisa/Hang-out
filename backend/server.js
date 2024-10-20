@@ -1,25 +1,35 @@
+import path from "path";
 import express from "express";
-import CookieParser from "cookie-parser";
 import dotenv from "dotenv";
-import authRoutes from "./Routes/authRoutes.js";
-import messagesRoutes from "./Routes/messageRoutes.js";
-import connectToMongoDb from "./Db/connectToMongoDb.js";
-import userRoutes from "./Routes/userRoutes.js";
 import cookieParser from "cookie-parser";
-const PORT = process.env.PORT || 5000;
-const app = express();
+
+import authRoutes from "./Routes/authRoutes.js";
+import messageRoutes from "./Routes/messageRoutes.js";
+import userRoutes from "./Routes/userRoutes.js";
+
+import connectToMongoDB from "./DB/connectToMongoDB.js";
+import { app, server } from "./socket/socket.js";
 
 dotenv.config();
+
+const __dirname = path.resolve();
+
+const PORT = process.env.PORT || 5000;
+
 app.use(express.json());
 app.use(cookieParser());
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
 
 app.use("/api/auth", authRoutes);
+app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/messages", messagesRoutes);
-app.listen(PORT, () => {
-  connectToMongoDb();
-  console.log(`Sever Running on port ${PORT}`);
+
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+app.get("*", (req, res) => {
+	res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+});
+
+server.listen(PORT, () => {
+	connectToMongoDB();
+	console.log(`Server Running on port ${PORT}`);
 });

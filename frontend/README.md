@@ -1,8 +1,7 @@
-# React + Vite
+Incorrect data structure: In the useGetMessage hook, you're fetching the conversation data and storing it in the messages state. However, the messages state is an array of MessageModel objects, but the data you're fetching is a ConversationModel object. This could be causing the issue where the last index of the messages array is a ConversationModel instead of a MessageModel.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Missing data transformation: In the useSendMessage hook, you're sending a message and receiving a response from the server. However, you're not transforming the response data into a MessageModel object before adding it to the messages array. This could be causing the issue where the last index of the messages array is a ConversationModel instead of a MessageModel.
 
-Currently, two official plugins are available:
+Incorrect state update: In the useSendMessage hook, you're updating the messages state by spreading the existing array and adding the new message to the end. However, you're not checking if the new message is a MessageModel object before adding it to the array. This could be causing the issue where the last index of the messages array is a ConversationModel instead of a MessageModel.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Server-side issue: It's possible that the server is returning a ConversationModel object instead of a MessageModel object in the response to the sendMessage request. This could be causing the issue where the last index of the messages array is a ConversationModel instead of a MessageModel.

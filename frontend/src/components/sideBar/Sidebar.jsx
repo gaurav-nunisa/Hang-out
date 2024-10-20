@@ -1,4 +1,4 @@
-import MultiConversations from "./multiConversations";
+import MultiConversations from "./MultiConversations";
 import LogoutButton from "./LogoutButton";
 import SearchInput from "./SearchInput";
 const Sidebar = () => {

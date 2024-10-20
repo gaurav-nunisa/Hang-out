@@ -7,7 +7,7 @@ import authRoutes from "./Routes/authRoutes.js";
 import messageRoutes from "./Routes/messageRoutes.js";
 import userRoutes from "./Routes/userRoutes.js";
 
-import connectToMongoDB from "./DB/connectToMongoDB.js";
+import connectToMongoDB from "./Db/connectToMongoDb.js";
 import { app, server } from "./socket/socket.js";
 
 dotenv.config();

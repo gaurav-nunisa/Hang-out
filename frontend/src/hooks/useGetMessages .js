@@ -13,7 +13,7 @@ const useGetMessages = () => {
         const res = await fetch(`/api/messages/${selectedConversation._id}`);
         const data = await res.json();
         if (data.error) throw new Error(data.error);
-        setMessages(data);
+        setMessages(Array.isArray(data) ? data : [data]);
       } catch (error) {
         toast.error(error.message);
       } finally {
@@ -23,22 +23,6 @@ const useGetMessages = () => {
 
     if (selectedConversation?._id) getMessages();
   }, [selectedConversation?._id, setMessages]);
-//   useEffect(() => {
-//     const listenMessages = async () => {
-//       const response = await listenMessages();
-//       if (response) {
-//         setMessages((prevMessages) => {
-//           if (!Array.isArray(prevMessages)) {
-//             return [response.data];
-//           } else {
-//             return [...prevMessages, response.data];
-//           }
-//         });
-//       }
-//     };
-
-//     listenMessages();
-//   }, []);
 
   return { messages, loading };
 };

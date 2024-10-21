@@ -14,10 +14,14 @@ const MultiMessages = () => {
       lastMessageRef.current?.scrollIntoView({ behaviour: "smooth" });
     }, 100);
   }, [messages]);
+  console.log("messages lenght from multMessages", messages)
   return (
     <div className="px-4 flex-1 overflow-auto">
+    
       {!loading &&
         messages.length > 0 &&
+        
+        
         messages.map((message) => (
           <div key={message._id} ref={lastMessageRef}>
             <Message messageProps={message} />
